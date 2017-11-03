@@ -16,9 +16,9 @@ public class DirChangerScript : MonoBehaviour {
 
     void OnTriggerEnter (Collider other)
     {
-        if (other.gameObject.tag == "DirChanger")
+        if (other.gameObject.tag == "ColBlock")
         {
-            Destroy(gameObject);
+            Destroy(other.gameObject);
         }
     }
 }

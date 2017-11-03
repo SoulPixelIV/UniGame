@@ -7,6 +7,11 @@ public class PlayerMovement : MonoBehaviour {
     public int dir;
     public float force;
     public float speed;
+    public float forceAmount;
+    public GameObject otherPlayer;
+
+    float gravity;
+    bool inField;
 	// Use this for initialization
 	void Start () {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
@@ -41,14 +46,44 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        transform.Translate(new Vector3(gravity * Time.deltaTime, 0, 0));
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        float dist = Vector3.Distance(transform.position, otherPlayer.transform.position);
+        if (dist < 2.9f)
+        {
+            rb.isKinematic = false;
+            Vector3 direction = (transform.position - otherPlayer.transform.position).normalized;
+            rb.AddForce(direction * forceAmount);
+            inField = true;
+        }
+        
+        if (dist > 4)
+        {
+            rb.isKinematic = true;
+            inField = false;
+        }
+
         if (dir == 1)
         {
-            rb.AddForce(new Vector3(force * Time.deltaTime, 0, 0));
+            if (inField == false)
+            {
+                gravity -= 0.8f * Time.deltaTime;
+            }
+            else
+            {
+                gravity += 0.2f * Time.deltaTime;
+            }
         }
         if (dir == 0)
         {
-            rb.AddForce(new Vector3(-force * Time.deltaTime, 0, 0));
+            if (inField == false)
+            {
+                gravity += 0.8f * Time.deltaTime;
+            }
+            else
+            {
+                gravity -= 0.2f * Time.deltaTime;
+            }
         }
 
         if (Player == 0)
