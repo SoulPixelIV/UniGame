@@ -128,4 +128,5 @@ MonoBehaviour:
   force: 24.5
   speed: 2.3
   forceAmount: 4
-  otherPlayer: {fileID: 0}
+  otherPlayer: {fileID: 1629325906552456, guid: 449af0c3b1f48ef49a0cfac285d8b3c7,
+    type: 2}
